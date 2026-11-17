@@ -24,7 +24,7 @@ public class RatingReportService {
     public String sendReport() {
         List<Rating> weeklyRatings = ratingListService.getWeeklyRatings();
 
-        emailService.sendEmail("Relatório Semanal de Feedbacks", generateMailBody(weeklyRatings));
+        emailService.sendEmail("Relatório Semanal de Feedback", generateMailBody(weeklyRatings));
         return "Report sent!";
     }
 
@@ -56,7 +56,15 @@ public class RatingReportService {
 
         String dateToday = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        StringBuilder emailBody = new StringBuilder("<h1>Relatório Semanal das Avaliações</h1>\n");
+        StringBuilder emailBody = new StringBuilder("""
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <title>Relatório Semanal das Avaliações</title>
+                </head>
+                <body>
+                
+                <h1>Relatório Semanal das Avaliações</h1>""");
         emailBody.append(String.format("<p>Relatório semanal enviado no dia %1$s com a listagem das avaliações por dia da semana e urgência.</p>\n", dateToday));
         emailBody.append("<h2>Quantidade de Avaliações Por Dia:</h2>\n");
         emailBody.append("<ul>\n");
